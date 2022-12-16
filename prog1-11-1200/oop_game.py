@@ -1,9 +1,10 @@
 import math
+import random
 
 class Circle:
     def __init__(self, diameter):
         self.diameter = diameter
-        self.health = 100
+        self.__health = 100
         self.happiness = 50
         self.active = True
 
@@ -11,8 +12,8 @@ class Circle:
         return math.pi * (self.diameter / 2) ** 2
     
     def changeHealth(self, delta):
-        self.health += delta
-        if self.health <= 0:
+        self.__health += delta
+        if self.__health <= 0:
             print("I am out of the game...")
             self.active = False
 
@@ -29,22 +30,31 @@ class Circle:
         target.happiness += 10
         self.happiness += 10
 
+    def interact(self, target):
+        actions = ['attack', 'friend']
+        action = random.choice(actions)
+        if action == 'attack':
+            self.attack(target)
+        elif action == 'friend':
+            self.friend(target)
+
     def status(self):
-        print(f"Health:{self.health} Happiness:{self.happiness}")
+        return f"Health:{self.__health} Happiness:{self.happiness}"
 
 
 class Square:
     def __init__(self, side):
         self.side = side
-        self.health = 100
+        self.__health = 100
         self.happiness = 50
+        self.active = True
 
     def area(self):
         return self.side ** 2
 
     def changeHealth(self, delta):
-        self.health += delta
-        if self.health <= 0:
+        self.__health += delta
+        if self.__health <= 0:
             print("I am out of the game...")
             self.active = False
 
@@ -61,24 +71,30 @@ class Square:
         target.happiness += 10
         self.happiness += 10
 
+    def interact(self, target):
+        actions = ['attack', 'friend']
+        action = random.choice(actions)
+        if action == 'attack':
+            self.attack(target)
+        elif action == 'friend':
+            self.friend(target)
+
     def status(self):
-        print(f"Health:{self.health} Happiness:{self.happiness}")
+        return f"Health:{self.__health} Happiness:{self.happiness}"
 
 
-aplis = Circle(5)
-kvadrats = Square(5)
+circles = []
+squares = []
 
-print(aplis.area())
-print(kvadrats.area())
+for i in range(100):
+    circles.append(Circle(random.randint(1, 200)))
+    squares.append(Square(random.randint(1, 200)))
 
-aplis.status()
-kvadrats.status()
+print(f"Circles: {len(circles)}, Squares: {len(squares)}")
 
-aplis.attack(kvadrats)
-aplis.attack(kvadrats)
-aplis.attack(kvadrats)
-aplis.attack(kvadrats)
-aplis.attack(kvadrats)
+for sim in range(10):
+    for i in range(100):
+        circles[i].interact(squares[i])
 
-aplis.status()
-kvadrats.status()
+for i in range(100):
+    print(f"Circle {circles[i].status()} | Square {squares[i].status()}")
