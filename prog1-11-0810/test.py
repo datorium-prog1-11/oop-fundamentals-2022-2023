@@ -1,31 +1,14 @@
-class rect:
-    def __init__(self):
-        self._health = 100
-        self.energy = 100
-
-    @property
-    def health(self):
-        print('getter method')
-        return self._health
-    
-    @health.setter
-    def health(self, newHealth):
-        print('setter method')
-        self._health = newHealth
+class Student:
+	def __init__(self,name):
+		self._name = name
+	@property
+	def name(self):
+		return self._name
+	@name.setter
+	def name(self,newname):
+		self._name = newname
 
 
-r1 = rect()
-r1.health = 20
+s1 = Student("Anna")
 
-print(r1.health)
-
-
-class A:
-    def __init__(self):
-        self.__var = 123
-    
-    def printVar(self):
-        print(self.__var)
-
-x = A()
-x.__var
+print(s1.name)
